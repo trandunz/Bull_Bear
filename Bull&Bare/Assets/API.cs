@@ -81,9 +81,6 @@ public class API : MonoBehaviour
                 m_ComparisonUpdateSpeed = m_ComparisonRate;
             }
         }
-        
-
-        
 
         m_UpdateSpeed -= Time.deltaTime;
         if (m_UpdateSpeed <= 0)

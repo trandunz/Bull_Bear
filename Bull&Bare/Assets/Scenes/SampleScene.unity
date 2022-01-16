@@ -326,10 +326,11 @@ MonoBehaviour:
   m_BTCText: {fileID: 1177634878}
   m_ETHImage: {fileID: 1058349942}
   m_BTCImage: {fileID: 1193353745}
-  m_UpArrow: {fileID: 0}
-  m_DownArrow: {fileID: 0}
+  m_UpArrow: {fileID: 21300000, guid: 10b3a6fd785a32b43830ba45ca8d2f28, type: 3}
+  m_DownArrow: {fileID: 21300000, guid: 2ebaa5bd3514e5c46b01e7c8a8e7e423, type: 3}
   UpdateRate: 1
   m_ComparisonRate: 5
+  m_RefreshComparisonOverTime: 0
 --- !u!4 &444257234
 Transform:
   m_ObjectHideFlags: 0
