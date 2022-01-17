@@ -19,6 +19,9 @@ public class API : MonoBehaviour
     private int m_BTCValue;
     private int m_ETHValue;
 
+    private int m_BTCLongTermValue;
+    private int m_ETHLongTermValue;
+
     [SerializeField] private Image m_ETHImage;
     [SerializeField] private Image m_BTCImage;
 
@@ -43,7 +46,12 @@ public class API : MonoBehaviour
     private Vector3 m_BTCStartRotation;
     private Vector3 m_BTCDownRotation;
 
+    [SerializeField] private Script_Rotator m_EthObject;
+    [SerializeField] private Script_Rotator m_BTCObject;
+
     [SerializeField] private bool m_RefreshComparisonOverTime;
+
+    bool doOnce = true;
 
     private void Start()
     {
@@ -55,13 +63,12 @@ public class API : MonoBehaviour
 
         m_ETHStartRotation = m_ETHImage.transform.rotation.eulerAngles;
         m_ETHDownRotation = new Vector3(m_ETHImage.transform.rotation.eulerAngles.x + 180, m_ETHImage.transform.rotation.eulerAngles.y, m_ETHImage.transform.rotation.eulerAngles.z);
-        m_ETHSideRotation = new Vector3(m_ETHImage.transform.rotation.eulerAngles.x , m_ETHImage.transform.rotation.eulerAngles.y, m_ETHImage.transform.rotation.eulerAngles.z - 90);
+        m_ETHSideRotation = new Vector3(m_ETHImage.transform.rotation.eulerAngles.x , m_ETHImage.transform.rotation.eulerAngles.y, m_ETHImage.transform.rotation.eulerAngles.z - 45);
 
 
         m_BTCStartRotation = m_BTCImage.transform.rotation.eulerAngles;
         m_BTCDownRotation = new Vector3(m_BTCImage.transform.rotation.eulerAngles.x + 180, m_BTCImage.transform.rotation.eulerAngles.y, m_BTCImage.transform.rotation.eulerAngles.z);
-        m_BTCSideRotation = new Vector3(m_BTCImage.transform.rotation.eulerAngles.x , m_BTCImage.transform.rotation.eulerAngles.y, m_BTCImage.transform.rotation.eulerAngles.z + 90);
-
+        m_BTCSideRotation = new Vector3(m_BTCImage.transform.rotation.eulerAngles.x , m_BTCImage.transform.rotation.eulerAngles.y, m_BTCImage.transform.rotation.eulerAngles.z + 45);
         Debug.Log(m_LastETHValue);
         Debug.Log(m_LastBTCValue);
         m_UpdateComparisonValue = false;
@@ -69,6 +76,8 @@ public class API : MonoBehaviour
 
     private void Update()
     {
+
+        
         UpdateETH();
         UpdateBTC();
 
@@ -77,6 +86,8 @@ public class API : MonoBehaviour
             m_ComparisonUpdateSpeed -= Time.deltaTime;
             if (m_ComparisonUpdateSpeed <= 0)
             {
+                m_BTCLongTermValue = m_BTCValue;
+                m_ETHLongTermValue = m_ETHValue;
                 m_UpdateComparisonValue = true;
                 m_ComparisonUpdateSpeed = m_ComparisonRate;
             }
@@ -107,6 +118,17 @@ public class API : MonoBehaviour
             Debug.Log(m_LastETHValue + "!");
             m_UpdateComparisonValue = false;
         }
+
+        if (doOnce)
+        {
+            m_BTCLongTermValue = m_BTCValue;
+            m_ETHLongTermValue = m_ETHValue;
+
+            if (m_BTCLongTermValue == m_BTCValue)
+            {
+                doOnce = false;
+            }
+        }
     }
 
     private void UpdateETH()
@@ -114,19 +136,25 @@ public class API : MonoBehaviour
         if (m_LastETHValue < m_ETHValue)
         {
             //m_ETHImage.transform.rotation = Quaternion.RotateTowards(m_ETHImage.transform.rotation,Quaternion.Euler(m_ETHStartRotation), Time.deltaTime * 100);
-            m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHStartRotation);
+            //m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHStartRotation);
+            m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHStartRotation);
+            m_EthObject.GetComponent<Renderer>().material.color = Color.green;
             Debug.Log("ETH WENT UP!");
         }
         if (m_LastETHValue > m_ETHValue)
         {
             //m_ETHImage.transform.rotation = Quaternion.RotateTowards(m_ETHImage.transform.rotation,Quaternion.Euler(m_ETHDownRotation), Time.deltaTime * 100);
-            m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHDownRotation);
+            //m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHDownRotation);
+            m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHDownRotation);
+            m_EthObject.GetComponent<Renderer>().material.color = Color.red;
             Debug.Log("ETH WENT DOWN!");
         }
         if (m_LastETHValue == m_ETHValue)
         {
             //m_ETHImage.transform.rotation = Quaternion.RotateTowards(m_ETHImage.transform.rotation, Quaternion.Euler(m_ETHSideRotation), Time.deltaTime * 100);
-            m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHSideRotation);
+            //m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHSideRotation);
+            m_EthObject.GetComponent<Renderer>().material.color = Color.yellow;
+            m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHSideRotation);
         }
     }
 
@@ -135,19 +163,25 @@ public class API : MonoBehaviour
         if (m_LastBTCValue < m_BTCValue)
         {
             //m_BTCImage.transform.rotation = Quaternion.RotateTowards(m_BTCImage.transform.rotation, Quaternion.Euler(m_BTCStartRotation), Time.deltaTime * 100);
-            m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCStartRotation);
+            //m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCStartRotation);
+            m_BTCObject.GetComponent<Renderer>().material.color = Color.green;
+            m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCStartRotation);
             Debug.Log("btc WENT UP!");
         }
         if (m_LastBTCValue > m_BTCValue)
         {
-            m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCDownRotation);
+            //m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCDownRotation);
+            m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCDownRotation);
+            m_BTCObject.GetComponent<Renderer>().material.color = Color.red;
             //m_BTCImage.transform.rotation = Quaternion.RotateTowards(m_BTCImage.transform.rotation, Quaternion.Euler(m_BTCDownRotation), Time.deltaTime * 100);
             Debug.Log("btc WENT DOWN!");
         }
         if (m_LastBTCValue == m_BTCValue)
         {
             //m_BTCImage.transform.rotation = Quaternion.RotateTowards(m_BTCImage.transform.rotation, Quaternion.Euler(m_BTCSideRotation), Time.deltaTime * 100);
-            m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCSideRotation);
+            //m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCSideRotation);
+            m_BTCObject.GetComponent<Renderer>().material.color = Color.yellow;
+            m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCSideRotation);
         }
 
     }
@@ -202,7 +236,7 @@ public class API : MonoBehaviour
         m_ETHPriceArray[6] = m_ETHArray[55];*/
 
         string VALUE = new string(m_ETHPriceArray);
-        m_EthText.text = VALUE;
+        m_EthText.text = VALUE + " : " + (int.Parse(VALUE) - m_LastETHValue);
         m_ETHValue = int.Parse(VALUE);
         Debug.Log(m_ETHValue);
     }
@@ -231,7 +265,7 @@ public class API : MonoBehaviour
         /*m_BTCPriceArray[7] = m_BTCArray[56];*/
 
         string VALUE2 = new string(m_BTCPriceArray);
-        m_BTCText.text = VALUE2;
+        m_BTCText.text = VALUE2 + " : " + (int.Parse(VALUE2) - m_LastBTCValue);
         m_BTCValue = int.Parse(VALUE2);
         Debug.Log(m_BTCValue);
     }
