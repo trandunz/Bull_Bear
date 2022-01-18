@@ -4,29 +4,23 @@ using UnityEngine;
 
 public class Script_Rotator : MonoBehaviour
 {
-    bool m_Rotating = false;
-    int m_RotationSign = 1;
 
-    void Update()
+    public IEnumerator RotateOverTime(Quaternion originalRotation, Quaternion finalRotation, float duration)
     {
-        if (m_Rotating)
+        if (duration > 0f)
         {
-            transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y + (1 * m_RotationSign), transform.rotation.z);
+            float startTime = Time.time;
+            float endTime = startTime + duration;
+            transform.rotation = originalRotation;
+            yield return null;
+            while (Time.time < endTime)
+            {
+                float progress = (Time.time - startTime) / duration;
+                // progress will equal 0 at startTime, 1 at endTime.
+                transform.rotation = Quaternion.Slerp(originalRotation, finalRotation, progress);
+                yield return null;
+            }
         }
-    }
-
-    public IEnumerator RotateLeft()
-    {
-        m_Rotating = true;
-        m_RotationSign = -1;
-        yield return new WaitForSeconds(2);
-        m_Rotating = false;
-    }
-    public IEnumerator RotateRight()
-    {
-        m_Rotating = true;
-        m_RotationSign = 1;
-        yield return new WaitForSeconds(2);
-        m_Rotating = false;
+        transform.rotation = finalRotation;
     }
 }

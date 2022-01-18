@@ -117,26 +117,26 @@ public class API : MonoBehaviour
     {
         if (m_LastETHValue < m_ETHValue)
         {
-            //m_ETHImage.transform.rotation = Quaternion.RotateTowards(m_ETHImage.transform.rotation,Quaternion.Euler(m_ETHStartRotation), Time.deltaTime * 100);
+            m_EthObject.transform.rotation = Quaternion.RotateTowards(m_EthObject.transform.rotation,Quaternion.Euler(m_ETHStartRotation), Time.deltaTime * 100);
             //m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHStartRotation);
-            m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHStartRotation);
+            //m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHStartRotation);
             m_EthObject.GetComponent<Renderer>().material.color = Color.green;
             Debug.Log("ETH WENT UP!");
         }
         if (m_LastETHValue > m_ETHValue)
         {
-            //m_ETHImage.transform.rotation = Quaternion.RotateTowards(m_ETHImage.transform.rotation,Quaternion.Euler(m_ETHDownRotation), Time.deltaTime * 100);
+            m_EthObject.transform.rotation = Quaternion.RotateTowards(m_EthObject.transform.rotation,Quaternion.Euler(m_ETHDownRotation), Time.deltaTime * 100);
             //m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHDownRotation);
-            m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHDownRotation);
+            //m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHDownRotation);
             m_EthObject.GetComponent<Renderer>().material.color = Color.red;
             Debug.Log("ETH WENT DOWN!");
         }
         if (m_LastETHValue == m_ETHValue)
         {
-            //m_ETHImage.transform.rotation = Quaternion.RotateTowards(m_ETHImage.transform.rotation, Quaternion.Euler(m_ETHSideRotation), Time.deltaTime * 100);
+            m_EthObject.transform.rotation = Quaternion.RotateTowards(m_EthObject.transform.rotation, Quaternion.Euler(m_ETHSideRotation), Time.deltaTime * 100);
             //m_ETHImage.transform.rotation = Quaternion.Euler(m_ETHSideRotation);
             m_EthObject.GetComponent<Renderer>().material.color = Color.yellow;
-            m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHSideRotation);
+            //m_EthObject.gameObject.transform.rotation = Quaternion.Euler(m_ETHSideRotation);
         }
     }
 
@@ -144,26 +144,26 @@ public class API : MonoBehaviour
     {
         if (m_LastBTCValue < m_BTCValue)
         {
-            //m_BTCImage.transform.rotation = Quaternion.RotateTowards(m_BTCImage.transform.rotation, Quaternion.Euler(m_BTCStartRotation), Time.deltaTime * 100);
+            m_BTCObject.transform.rotation = Quaternion.RotateTowards(m_BTCObject.transform.rotation, Quaternion.Euler(m_BTCStartRotation), Time.deltaTime * 100);
             //m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCStartRotation);
             m_BTCObject.GetComponent<Renderer>().material.color = Color.green;
-            m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCStartRotation);
+            //m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCStartRotation);
             Debug.Log("btc WENT UP!");
         }
         if (m_LastBTCValue > m_BTCValue)
         {
             //m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCDownRotation);
-            m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCDownRotation);
+            //m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCDownRotation);
             m_BTCObject.GetComponent<Renderer>().material.color = Color.red;
-            //m_BTCImage.transform.rotation = Quaternion.RotateTowards(m_BTCImage.transform.rotation, Quaternion.Euler(m_BTCDownRotation), Time.deltaTime * 100);
+            m_BTCObject.transform.rotation = Quaternion.RotateTowards(m_BTCObject.transform.rotation, Quaternion.Euler(m_BTCDownRotation), Time.deltaTime * 100);
             Debug.Log("btc WENT DOWN!");
         }
         if (m_LastBTCValue == m_BTCValue)
         {
-            //m_BTCImage.transform.rotation = Quaternion.RotateTowards(m_BTCImage.transform.rotation, Quaternion.Euler(m_BTCSideRotation), Time.deltaTime * 100);
+            m_BTCObject.transform.rotation = Quaternion.RotateTowards(m_BTCObject.transform.rotation, Quaternion.Euler(m_BTCSideRotation), Time.deltaTime * 100);
             //m_BTCImage.transform.rotation = Quaternion.Euler(m_BTCSideRotation);
             m_BTCObject.GetComponent<Renderer>().material.color = Color.yellow;
-            m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCSideRotation);
+            //m_BTCObject.gameObject.transform.rotation = Quaternion.Euler(m_BTCSideRotation);
         }
 
     }
