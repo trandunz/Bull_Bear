@@ -19,9 +19,6 @@ public class API : MonoBehaviour
     private int m_BTCValue;
     private int m_ETHValue;
 
-    private int m_BTCLongTermValue;
-    private int m_ETHLongTermValue;
-
     [SerializeField] private Image m_ETHImage;
     [SerializeField] private Image m_BTCImage;
 
@@ -76,8 +73,6 @@ public class API : MonoBehaviour
 
     private void Update()
     {
-
-        
         UpdateETH();
         UpdateBTC();
 
@@ -86,8 +81,6 @@ public class API : MonoBehaviour
             m_ComparisonUpdateSpeed -= Time.deltaTime;
             if (m_ComparisonUpdateSpeed <= 0)
             {
-                m_BTCLongTermValue = m_BTCValue;
-                m_ETHLongTermValue = m_ETHValue;
                 m_UpdateComparisonValue = true;
                 m_ComparisonUpdateSpeed = m_ComparisonRate;
             }
@@ -117,17 +110,6 @@ public class API : MonoBehaviour
             Debug.Log(m_LastBTCValue + "!");
             Debug.Log(m_LastETHValue + "!");
             m_UpdateComparisonValue = false;
-        }
-
-        if (doOnce)
-        {
-            m_BTCLongTermValue = m_BTCValue;
-            m_ETHLongTermValue = m_ETHValue;
-
-            if (m_BTCLongTermValue == m_BTCValue)
-            {
-                doOnce = false;
-            }
         }
     }
 
@@ -204,13 +186,6 @@ public class API : MonoBehaviour
     {
         yield return Req2;
         GetBTCValue(Req2);
-        /*if (m_bOnStart)
-        {
-            
-            
-            
-            m_bOnStart = false;
-        }*/
     }
 
     private void GetETHValue(WWW _Req)
@@ -236,6 +211,11 @@ public class API : MonoBehaviour
         m_ETHPriceArray[6] = m_ETHArray[55];*/
 
         string VALUE = new string(m_ETHPriceArray);
+        int difference = int.Parse(VALUE) - m_LastETHValue;
+        if (difference.ToString() == VALUE)
+        {
+            m_LastETHValue = m_ETHValue;
+        }
         m_EthText.text = VALUE + " : " + (int.Parse(VALUE) - m_LastETHValue);
         m_ETHValue = int.Parse(VALUE);
         Debug.Log(m_ETHValue);
@@ -265,7 +245,12 @@ public class API : MonoBehaviour
         /*m_BTCPriceArray[7] = m_BTCArray[56];*/
 
         string VALUE2 = new string(m_BTCPriceArray);
-        m_BTCText.text = VALUE2 + " : " + (int.Parse(VALUE2) - m_LastBTCValue);
+        int difference = int.Parse(VALUE2) - m_LastBTCValue;
+        if (difference.ToString() == VALUE2)
+        {
+            m_LastBTCValue = m_BTCValue;
+        }
+        m_BTCText.text = VALUE2 + " : " + difference;
         m_BTCValue = int.Parse(VALUE2);
         Debug.Log(m_BTCValue);
     }
