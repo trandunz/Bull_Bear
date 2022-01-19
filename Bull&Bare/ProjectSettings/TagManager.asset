@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - UI_CompRate
+  - UI_CompRateValue
+  - UI_CompRateInput
   layers:
   - Default
   - TransparentFX

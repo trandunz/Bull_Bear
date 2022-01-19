@@ -28,7 +28,7 @@ public class API : MonoBehaviour
     [SerializeField] private int m_ComparisonRate;
 
     private float m_UpdateSpeed;
-    private float m_ComparisonUpdateSpeed;
+    public float m_ComparisonUpdateSpeed;
     private bool m_UpdateComparisonValue;
 
     private int m_LastBTCValue;
@@ -46,12 +46,24 @@ public class API : MonoBehaviour
     [SerializeField] private Script_Rotator m_EthObject;
     [SerializeField] private Script_Rotator m_BTCObject;
 
-    [SerializeField] private bool m_RefreshComparisonOverTime;
+    public bool m_RefreshComparisonOverTime;
+    public void ToggleComparisonOverTime()
+    {
+        m_RefreshComparisonOverTime = !m_RefreshComparisonOverTime;
+    }
+
+    public void SetComparisonRate()
+    {
+        m_ComparisonUpdateSpeed = float.Parse(GameObject.FindGameObjectWithTag("UI_CompRateInput").GetComponent<InputField>().text);
+        GameObject.FindGameObjectWithTag("UI_CompRateValue").GetComponent<Text>().text = m_ComparisonUpdateSpeed.ToString() + " Seconds";
+    }
 
     bool doOnce = true;
 
     private void Start()
     {
+        GameObject.FindGameObjectWithTag("UI_CompRateInput").GetComponent<InputField>().text = "1";
+        SetComparisonRate();
         m_BTCArray = new char[66];
         m_ETHArray = new char[66];
         m_UpdateSpeed = 0.0f;
